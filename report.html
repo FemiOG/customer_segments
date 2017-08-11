@@ -12243,7 +12243,7 @@ Based on the extreme values in the max which might affect the mean, I decided to
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong><br>
-I attempted to predict the <strong>Grocery</strong> feature and the prediction score was 75% which implies that the remaining features were able to capture 75% of the variance in the <strong>Grocery</strong> feature, hence the <strong>Grocery</strong> feature is necessary for identifying customers' spending habits.</p>
+I attempted to predict the <strong>Grocery</strong> feature and the prediction score was 75% which implies that the remaining features were able to capture 75% of the variance in the <strong>Grocery</strong> feature, hence the <strong>Grocery</strong> feature is not necessary for identifying customers' spending habits.</p>
 
 </div>
 </div>
@@ -18362,7 +18362,8 @@ Once you have performed this implementation, the dataset will be stored in the v
     <span class="n">display</span><span class="p">(</span><span class="n">log_data</span><span class="p">[</span><span class="o">~</span><span class="p">((</span><span class="n">log_data</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">Q1</span> <span class="o">-</span> <span class="n">step</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">log_data</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">Q3</span> <span class="o">+</span> <span class="n">step</span><span class="p">))])</span>
     
 <span class="c1"># OPTIONAL: Select the indices for data points you wish to remove</span>
-<span class="n">outliers</span>  <span class="o">=</span> <span class="p">[</span><span class="mi">65</span><span class="p">,</span><span class="mi">66</span><span class="p">,</span><span class="mi">154</span><span class="p">]</span>
+
+<span class="n">outliers</span>  <span class="o">=</span> <span class="p">[</span><span class="mi">65</span><span class="p">,</span><span class="mi">66</span><span class="p">,</span><span class="mi">75</span><span class="p">,</span><span class="mi">154</span><span class="p">,</span><span class="mi">128</span><span class="p">]</span>
 
 <span class="c1"># Remove the outliers, if any were specified</span>
 <span class="n">good_data</span> <span class="o">=</span> <span class="n">log_data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">log_data</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">outliers</span><span class="p">])</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
@@ -19117,6 +19118,8 @@ Once you have performed this implementation, the dataset will be stored in the v
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong><br>
 The 154th observation is considered an outlier for 3 features (Delicatessen,Grocery &amp; Milk)<br>
+The 75th observation is considered an outlier for 2 features (Detergents_paper &amp; Grocery)<br>
+The 128th observation is considered an outlier for 2 features (Fresh &amp; Delicatessen)<br>
 The 65th observation is considered an outlier for 2 features (Fresh &amp; Frozen)<br>
 The 66th observation is considered an outlier for 2 features (Fresh &amp; Delicatessen)</p>
 <p>These three observations were removed because they occured in more than one feature which may indicate that these outliers may have an effect on our analysis. Also, it seems like a good rule of thumb.</p>
@@ -19513,20 +19516,13 @@ The variance in the data explained in total by the first and second principal co
 The variance in the data explained in total by the first four principal components is about 92.8%.</p>
 <p><em>For the sake of simplicity and interpritability i would consider old features with correlation greater than 0.5.</em></p>
 <p><strong>Dimension 1</strong><br>
-The first dimension has a very strong correlation with decreasing amount spent on Detergents &amp; paper products, Grocery &amp; Milk products.
-This new feature is primarily a measure of how low customers spend on Detergents_paper.
-This dimension increases as the amount spent on Detergeants_papers, Grocery &amp; Milk products reduces.
-Customers with high values of this dimension(feature) tend to spend low on Grocery &amp; Milk products and even lower on Detergent_paper products.</p>
-<p>Finally, this new dimension(feature) captures customer that spend low on Grocery &amp; Milk products and even lower on Detergent_paper products.</p>
+The first dimension shows that there is a very strong correlation among the amout spent on Detergents &amp; paper products, Grocery &amp; Milk products.</p>
 <p><strong>Dimension 2</strong><br>
-The 2nd dimension describes customers that spend little on Deli, Frozen and fresh products. As the amount spent on Deli, Frozen and fresh products reduces the value of this feature for that customer increases.</p>
+The 2nd dimension shows that the amount spent on Deli, Frozen and Fresh products has a strong correlation.</p>
 <p><strong>Dimension 3</strong><br>
-This dimension describes a situation whereby, as the amount a particular customer spends on Deli products increases, there is a corresponding decrease in amount spent on Detergents and paper products.</p>
-<p>It is primarily a measure of customers who need or place a premium on Deli products but doesn't need or care about Detergents and paper products.</p>
-<p>Customers that have high values of this feature tend to spend more on Deli products and less on Detergents &amp; paper products.</p>
+The 3rd dimension shows that there is a very strong correlation between amount spent on Deli and Fresh products.</p>
 <p><strong>Dimension 4</strong><br>
-The 4th dimension has a very strong postive correlation with amount spent on Frozen products and also a good negative correlation with amount spent on deli products.</p>
-<p>It captures customers that spends quite a lot on Frozen products and little on deli products.</p>
+The 4th dimension shows that there is a strong correlation between amount spent on Deli products and Frozen products.</p>
 
 </div>
 </div>
@@ -21916,8 +21912,11 @@ For the  3rd sample (sample 2) segment 1 best represents it's set of features.</
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong><br>
-The wholesale distributor could use A/B test to determine how the two different customer segments react to the change.
-The segment with a higher positive rate would be chosen to undergo the change completely.</p>
+First, let's assume the change affects all customers equally. Now to determine which customer segments this change affects the most we set up an A/B test for each segments.
+Pick random samples from the first segment, then split these samples into control group (delivery service remains the same) and treatment group (delivery is reduced to 3 days a week) then use an evaluation metric such as customer satisfaction which would be the experiment variable.
+The postive rate for this first segment is recorded.</p>
+<p>Then repeat the same for the second segment and record the positive rate for the second segment is recorded.</p>
+<p>Next, we compare the positive rates for both segments and then with these values, we can know which segment is more receptive to this new change and how receptive, then go ahead to implement the change.</p>
 
 </div>
 </div>
